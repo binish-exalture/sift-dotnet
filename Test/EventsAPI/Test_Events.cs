@@ -528,5 +528,78 @@ namespace Test.EventsAPI
             Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri!.ToString()));
         }
+
+        [Fact]
+        public void TestUpdateOrderEventWithCryptoFields()
+        {
+            //Please provide the valid session id in place of 'sessionId'
+            var sessionId = "sessionId";
+            var updateOrder = new UpdateOrder
+            {
+                user_id = "test_dotnet_merchant_profile_field",
+                session_id = sessionId,
+                order_id = "12345",
+                payment_methods = new ObservableCollection<PaymentMethod>()
+                {
+                    new PaymentMethod
+                    {
+                        wallet_address = "ZplYVmchAoywfMvC8jCiKlBLfKSBiFtHU6",
+                        wallet_type = "$crypto"
+                    }
+                },
+                digital_orders = new ObservableCollection<DigitalOrder>()
+                {
+                    new DigitalOrder
+                    {
+                        digital_asset="BTC",
+                        pair="BTC_USD",
+                        asset_type="$crypto",
+                        order_type="$market",
+                        volume="6.0"
+                    }
+                },
+
+            };
+
+            // Augment with custom fields
+            updateOrder.AddField("foo", "bar");
+            Assert.Equal("{\"$type\":\"$update_order\",\"$user_id\":\"test_dotnet_merchant_profile_field\",\"$session_id\":\"sessionId\"," +
+            "\"$order_id\":\"12345\"," +
+            "\"$payment_methods\":[" +
+            "{" +
+            "\"$wallet_address\":\"ZplYVmchAoywfMvC8jCiKlBLfKSBiFtHU6\"," +
+            "\"$wallet_type\":\"$crypto\"" +
+            "}" +
+            "]," +
+            "\"$digital_orders\":[" +
+            "{" +
+            "\"$digital_asset\":\"BTC\"," +
+            "\"$pair\":\"BTC_USD\"," +
+            "\"$asset_type\":\"$crypto\"," +
+            "\"$order_type\":\"$market\"," +
+            "\"$volume\":\"6.0\"" +
+            "}" +
+            "]," +
+            "\"foo\":\"bar\"}",
+            updateOrder.ToJson());
+
+            EventRequest eventRequest = new EventRequest
+            {
+                Event = updateOrder
+            };
+
+            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri!.ToString());
+
+            eventRequest = new EventRequest
+            {
+                Event = updateOrder,
+                AbuseTypes = { "legacy", "payment_abuse" },
+                ReturnScore = true
+            };
+
+            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+                          Uri.UnescapeDataString(eventRequest.Request.RequestUri!.ToString()));
+        }
+
     }
 }
