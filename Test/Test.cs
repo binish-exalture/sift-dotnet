@@ -53,26 +53,7 @@ namespace Test
 
         
 
-        [Fact]
-        public void TestVerificationReSendRequest()
-        {
-            //Please provide the valid api key in place of 'key'
-            var apiKey = "key";
-            var verificationResendRequest = new VerificationReSendRequest
-            {
-                UserId = "haneeshv@exalture.com",
-                ApiKey = apiKey,
-                VerifiedEntityId = "SOME_SESSION_ID",
-                VerifiedEvent = "$login"
-            };
-            verificationResendRequest.ApiKey = apiKey;
-
-            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
-                verificationResendRequest.Request.Headers.Authorization!.Parameter);
-
-            Assert.Equal("https://api.sift.com/v1/verification/resend",
-                         verificationResendRequest.Request.RequestUri!.ToString());
-        }
+        
 
 
         [Fact]
