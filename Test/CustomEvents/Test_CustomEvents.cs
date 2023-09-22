@@ -59,5 +59,25 @@ namespace Test.CustomEvents
             Assert.True(webhook.IsValidWebhook(requestBody, secretKey, signature));
 
         }
+
+        [Fact]
+        public void TestWebHookValidationForInvalidSecretKey()
+        {
+            //Please provide the secret api key in place of 'key'
+            String secretKey = "key";
+            String requestBody = "{" +
+                "\"entity\": {" +
+                "\"type\": \"user\"," +
+                "\"id\": \"USER123\"" +
+                "}," +
+                "\"decision\": {" +
+                "\"id\": \"block_user_payment_abuse\"" +
+                "}," +
+                "\"time\": 1461963439151" +
+                "}";
+
+            WebhookValidator webhook = new WebhookValidator();
+            Assert.False(webhook.IsValidWebhook(requestBody, secretKey, "InValid Key"));
+        }
     }
 }
