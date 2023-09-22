@@ -15,4 +15,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Sift\Sift.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PSPMerchantManagementAPI\" />
+  </ItemGroup>
 </Project>
