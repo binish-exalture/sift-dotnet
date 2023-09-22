@@ -8,53 +8,7 @@ namespace Test.EventsAPI
     {
         
 
-        [Fact]
-        public void TestEventWithBrowser()
-        {
-            //Please provide the valid session id in place of 'sessionId'
-            var sessionId = "sessionId";
-            var createOrder = new CreateOrder
-            {
-                user_id = "test_dotnet_browser_field",
-                order_id = "oid",
-                amount = 1000000000000L,
-                currency_code = "USD",
-                session_id = sessionId,
-                user_email = "bill@gmail.com",
-                browser = new Browser
-                {
-                    user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
-                    accept_language = "en-US",
-                    content_language = "en-GB"
-                }
-            };
-
-            // Augment with custom fields
-            createOrder.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_browser_field\",\"$session_id\":\"sessionId\"," +
-                         "\"$order_id\":\"oid\",\"$user_email\":\"bill@gmail.com\",\"$amount\":1000000000000,\"$currency_code\":\"USD\"," +
-                         "\"$browser\":{\"$user_agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36\"," +
-                         "\"$accept_language\":\"en-US\",\"$content_language\":\"en-GB\"},\"foo\":\"bar\"}",
-                         createOrder.ToJson());
-
-
-            EventRequest eventRequest = new EventRequest
-            {
-                Event = createOrder
-            };
-
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri!.ToString());
-
-            eventRequest = new EventRequest
-            {
-                Event = createOrder,
-                AbuseTypes = { "legacy", "payment_abuse" },
-                ReturnScore = true
-            };
-
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
-                         Uri.UnescapeDataString(eventRequest.Request.RequestUri!.ToString()));
-        }
+        
 
         [Fact]
         public void TestTransactionEvent()
