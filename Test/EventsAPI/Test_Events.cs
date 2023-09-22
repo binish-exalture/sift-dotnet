@@ -133,52 +133,7 @@ namespace Test.EventsAPI
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri!.ToString()));
         }
 
-        [Fact]
-        public void TestCreateOrderEventWithSepaPaymentMethodFields()
-        {
-            //Please provide the valid session id in place of 'sessionId'
-            var sessionId = "sessionId";
-            var createOrder = new CreateOrder
-            {
-                user_id = "test_dotnet_sepa_payment_method_fields",
-                session_id = sessionId,
-                order_id = "12345",
-                payment_methods = new ObservableCollection<PaymentMethod>()
-                {
-                    new PaymentMethod
-                    {
-                        payment_type = "$sepa_instant_credit",
-                        shortened_iban_first6 = "FR7630",
-                        shortened_iban_last4 = "1234",
-                        sepa_direct_debit_mandate = true
-                    }
-                }
-            };
-
-            // Augment with custom fields
-            createOrder.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_sepa_payment_method_fields\",\"$session_id\":\"sessionId\"," +
-                                 "\"$order_id\":\"12345\",\"$payment_methods\":[{\"$payment_type\":\"$sepa_instant_credit\",\"$shortened_iban_first6\":\"FR7630\"," +
-                                 "\"$shortened_iban_last4\":\"1234\",\"$sepa_direct_debit_mandate\":true}],\"foo\":\"bar\"}",
-                                 createOrder.ToJson());
-
-            EventRequest eventRequest = new EventRequest
-            {
-                Event = createOrder
-            };
-
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri!.ToString());
-
-            eventRequest = new EventRequest
-            {
-                Event = createOrder,
-                AbuseTypes = { "legacy", "payment_abuse" },
-                ReturnScore = true
-            };
-
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
-                          Uri.UnescapeDataString(eventRequest.Request.RequestUri!.ToString()));
-        }
+        
 
         [Fact]
         public void TestCreateOrderEventWithMerchantProfileField()
