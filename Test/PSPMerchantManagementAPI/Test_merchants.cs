@@ -137,5 +137,26 @@ namespace Test.PSPMerchantManagementAPI
                                Newtonsoft.Json.JsonConvert.SerializeObject(updateMerchantRequest));
 
         }
+
+        [Fact]
+        public void TestGetMerchantDetailsRequest()
+        {
+            //Please provide the valid account id in place of dummy number;
+            var accountId = "12345678";
+            //Please provide the valid api key in place of 'key'
+            var apiKey = "key";
+            var getMerchantDetailRequest = new GetMerchantDetailsRequest
+            {
+                AccountId = accountId,
+                MerchantId = "test-merchat-id",
+            };
+            getMerchantDetailRequest.ApiKey = apiKey;
+
+            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
+                getMerchantDetailRequest.Request.Headers.Authorization!.Parameter);
+
+            Assert.Equal("https://api.sift.com/v3/accounts/" + accountId + "/psp_management/merchants/test-merchat-id",
+             getMerchantDetailRequest.Request.RequestUri!.ToString());
+        }
     }
 }
