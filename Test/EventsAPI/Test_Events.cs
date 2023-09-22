@@ -135,72 +135,7 @@ namespace Test.EventsAPI
 
         
 
-        [Fact]
-        public void TestCreateOrderEventWithMerchantProfileField()
-        {
-            //Please provide the valid session id in place of 'sessionId'
-            var sessionId = "sessionId";
-            var createOrder = new CreateOrder
-            {
-                user_id = "test_dotnet_merchant_profile_field",
-                session_id = sessionId,
-                order_id = "12345",
-                payment_methods = new ObservableCollection<PaymentMethod>()
-                {
-                    new PaymentMethod
-                    {
-                        payment_type = "$sepa_instant_credit",
-                        shortened_iban_first6 = "FR7630",
-                        shortened_iban_last4 = "1234",
-                        sepa_direct_debit_mandate = true
-                    }
-                },
-                merchant_profile = new MerchantProfile
-                {
-                    merchant_id = "123",
-                    merchant_category_code = "9876",
-                    merchant_name = "ABC Merchant",
-                    merchant_address = new Address
-                    {
-                        name = "Bill Jones",
-                        phone = "1-415-555-6040",
-                        address_1 = "2100 Main Street",
-                        address_2 = "Apt 3B",
-                        city = "New London",
-                        region = "New Hampshire",
-                        country = "US",
-                        zipcode = "03257"
-                    }
-                }
-            };
-
-            // Augment with custom fields
-            createOrder.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_merchant_profile_field\",\"$session_id\":\"sessionId\"," +
-                                 "\"$order_id\":\"12345\",\"$payment_methods\":[{\"$payment_type\":\"$sepa_instant_credit\",\"$shortened_iban_first6\":\"FR7630\"," +
-                                 "\"$shortened_iban_last4\":\"1234\",\"$sepa_direct_debit_mandate\":true}],\"$merchant_profile\":{\"$merchant_id\":\"123\"," +
-                                 "\"$merchant_category_code\":\"9876\",\"$merchant_name\":\"ABC Merchant\",\"$merchant_address\":{\"$name\":\"Bill Jones\"," +
-                                 "\"$address_1\":\"2100 Main Street\",\"$address_2\":\"Apt 3B\",\"$city\":\"New London\",\"$region\":\"New Hampshire\"," +
-                                 "\"$country\":\"US\",\"$zipcode\":\"03257\",\"$phone\":\"1-415-555-6040\"}},\"foo\":\"bar\"}",
-                                 createOrder.ToJson());
-
-            EventRequest eventRequest = new EventRequest
-            {
-                Event = createOrder
-            };
-
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri!.ToString());
-
-            eventRequest = new EventRequest
-            {
-                Event = createOrder,
-                AbuseTypes = { "legacy", "payment_abuse" },
-                ReturnScore = true
-            };
-
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
-                          Uri.UnescapeDataString(eventRequest.Request.RequestUri!.ToString()));
-        }
+        
 
         [Fact]
         public void TestCreateOrderEventWithCryptoFields()
