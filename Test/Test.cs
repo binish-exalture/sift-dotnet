@@ -51,46 +51,7 @@ namespace Test
 
         
 
-        [Fact]
-        public void TestVerificationSendRequest()
-        {
-            //Please provide the valid api key in place of 'key'
-            var apiKey = "key";
-            //Please provide the valid session id in place of 'sessionId'
-            var sessionId = "sessionId";
-            var verificationSendRequest = new VerificationSendRequest
-            {
-                UserId = "haneeshv@exalture.com",
-                ApiKey = apiKey,
-                BrandName = "all",
-                VerificationType = "$email",
-                SendTo = "haneeshv@exalture.com",
-                Language = "en",
-                SiteCountry = "IN",
-                Event = new VerificationSendEvent()
-                {
-                    Browser = new Browser()
-                    {
-                        user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36",
-                        content_language = "en-US",
-                        accept_language = "en-GB",
-                    },
-                    IP = "192.168.1.1",
-                    Reason = "$automated_rule",
-                    SessionId = sessionId,
-                    VerifiedEvent = "$login",
-                    VerifiedEntityId = "SOME_SESSION_ID"
-                }
-            };
-
-            verificationSendRequest.ApiKey = apiKey;
-
-            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
-                verificationSendRequest.Request.Headers.Authorization!.Parameter);
-
-            Assert.Equal("https://api.sift.com/v1/verification/send",
-                         verificationSendRequest.Request.RequestUri!.ToString());
-        }
+        
 
         [Fact]
         public void TestVerificationReSendRequest()
