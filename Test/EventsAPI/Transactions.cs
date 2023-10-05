@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Test.EventsAPI
 {
-    public class Test_Transactions
+    public class Transactions
     {
         [Fact]
         public void TestTransactionEvent()

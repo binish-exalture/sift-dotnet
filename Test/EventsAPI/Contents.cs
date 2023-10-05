@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Test.EventsAPI
 {
-    public class Test_Contents
+    public class Contents
     {
         //UpdateContentComment
         [Fact]

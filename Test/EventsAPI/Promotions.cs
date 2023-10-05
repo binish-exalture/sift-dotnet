@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Test.EventsAPI
 {
-    public class Test_Promotions
+    public class Promotions
     {
         [Fact]
         public void TestAddPromotionEvent()

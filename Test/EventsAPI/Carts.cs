@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Test.EventsAPI
 {
-    public class Test_Carts
+    public class Carts
     {
         [Fact]
         public void TestAdditemtocartEvent()

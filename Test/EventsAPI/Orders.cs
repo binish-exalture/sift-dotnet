@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Test.EventsAPI
 {
-    public class Test_Orders
+    public class Orders
     {
         [Fact]
         public void TestEventRequest()

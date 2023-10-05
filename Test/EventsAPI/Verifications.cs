@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Test.EventsAPI
 {
-    public class Test_Verifications
+    public class Verifications
     {
         [Fact]
         public void TestVerificationEvent()

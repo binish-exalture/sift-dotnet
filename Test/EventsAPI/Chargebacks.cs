@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Test.EventsAPI
 {
-    public class Test_Chargebacks
+    public class Chargebacks
     {
         [Fact]
         public void TestChargebackEvent()

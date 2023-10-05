@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Test.EventsAPI
 {
-    public class Test_Accounts
+    public class Accounts
     {
         [Fact]
         public void TestCreateAccountEvent()
