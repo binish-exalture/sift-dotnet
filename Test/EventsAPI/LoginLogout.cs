@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Test.EventsAPI
 {
-    public class Loggings
+    public class LoginLogout
     {
         [Fact]
         public void TestLoginEvent()
